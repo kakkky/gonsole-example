@@ -2,44 +2,44 @@ package plant
 
 import "fmt"
 
-// 植物インターフェース
+// Plant interface defines common behavior for all plants
 type Plant interface {
 	Grow() string
 	Bloom() string
 	Describe() string
-	Water() Plant     // メソッドチェーン用
-	Fertilize() Plant // メソッドチェーン用
+	Water() Plant     // For method chaining
+	Fertilize() Plant // For method chaining
 	GetHealth() string
-	ChangeName(newName string) Plant // 植物の名前を変更する
+	ChangeName(newName string) Plant // Change plant name
 }
 
-// 基本植物構造体
+// BasePlant is the base structure for all plants
 type BasePlant struct {
 	Name    string
-	Age     int // 年数
+	Age     int // Age in years
 	Watered bool
 	Healthy bool
 }
 
-// 花構造体
+// Flower represents a flower with color information
 type Flower struct {
 	BasePlant
-	Color string // 花の色
+	Color string // Flower color
 }
 
-// 木構造体
+// Tree represents a tree with height information
 type Tree struct {
 	BasePlant
-	Height float64 // 高さ（メートル）
+	Height float64 // Height in meters
 }
 
-// 定数
+// Constants for default values
 const (
-	DefaultColor  = "赤"
+	DefaultColor  = "Red"
 	DefaultHeight = 1.0
 )
 
-// 花のコンストラクタ
+// NewFlower creates a new flower instance.
 func NewFlower(name string, age int) *Flower {
 	return &Flower{
 		BasePlant: BasePlant{
@@ -52,7 +52,7 @@ func NewFlower(name string, age int) *Flower {
 	}
 }
 
-// 木のコンストラクタ
+// NewTree creates a new tree instance.
 func NewTree(name string, age int) *Tree {
 	return &Tree{
 		BasePlant: BasePlant{
@@ -65,102 +65,112 @@ func NewTree(name string, age int) *Tree {
 	}
 }
 
-// 花のインターフェース実装
+// Grow makes the flower grow and increases its age.
 func (f *Flower) Grow() string {
 	f.Age++
-	return "花がすくすく成長しています"
+	return "The flower is growing beautifully"
 }
 
+// Bloom makes the flower bloom.
 func (f *Flower) Bloom() string {
-	return fmt.Sprintf("%sの美しい花が咲きました", f.Color)
+	return fmt.Sprintf("Beautiful %s flowers have bloomed", f.Color)
 }
 
+// Describe returns detailed information about the flower.
 func (f *Flower) Describe() string {
-	return fmt.Sprintf("%s（%d年目、%sの花）", f.Name, f.Age, f.Color)
+	return fmt.Sprintf("%s (%d years old, %s flowers)", f.Name, f.Age, f.Color)
 }
 
+// Water waters the flower. Supports method chaining.
 func (f *Flower) Water() Plant {
 	f.Watered = true
-	return f // メソッドチェーン用
+	return f // For method chaining
 }
 
+// Fertilize fertilizes the flower. Supports method chaining.
 func (f *Flower) Fertilize() Plant {
 	f.Healthy = true
-	return f // メソッドチェーン用
+	return f // For method chaining
 }
 
+// GetHealth returns the flower's health status.
 func (f *Flower) GetHealth() string {
-	// 短縮変数宣言
-	health := "普通"
+	// Short variable declaration
+	health := "Normal"
 	if f.Watered && f.Healthy {
-		health = "とても元気"
+		health = "Very Healthy"
 	} else if f.Watered {
-		health = "潤っている"
+		health = "Well Watered"
 	} else if f.Healthy {
-		health = "健康"
+		health = "Healthy"
 	} else {
-		health = "元気がない"
+		health = "Needs Care"
 	}
 	return health
 }
 
-// 花専用のメソッド
+// SetColor sets the flower's color.
 func (f *Flower) SetColor(color string) {
 	f.Color = color
 }
 
-// 名前を変えるメソッド
+// ChangeName changes the flower's name. Supports method chaining.
 func (f *Flower) ChangeName(newName string) Plant {
 	f.Name = newName
 	return f
 }
 
-// 木のインターフェース実装
+// Grow makes the tree grow, increasing its age and height.
 func (t *Tree) Grow() string {
 	t.Age++
 	t.Height += 0.5
-	return "木がどんどん大きくなっています"
+	return "The tree is growing bigger and taller"
 }
 
+// Bloom makes the tree bloom.
 func (t *Tree) Bloom() string {
-	return "木に小さな花が咲きました"
+	return "Small flowers have bloomed on the tree"
 }
 
+// Describe returns detailed information about the tree.
 func (t *Tree) Describe() string {
-	return fmt.Sprintf("%s（%d年目、高さ%.1fm）", t.Name, t.Age, t.Height)
+	return fmt.Sprintf("%s (%d years old, %.1fm tall)", t.Name, t.Age, t.Height)
 }
 
+// Water waters the tree. Supports method chaining.
 func (t *Tree) Water() Plant {
 	t.Watered = true
-	return t // メソッドチェーン用
+	return t // For method chaining
 }
 
+// Fertilize fertilizes the tree. Supports method chaining.
 func (t *Tree) Fertilize() Plant {
 	t.Healthy = true
-	return t // メソッドチェーン用
+	return t // For method chaining
 }
 
+// GetHealth returns the tree's health status.
 func (t *Tree) GetHealth() string {
-	// 短縮変数宣言
-	health := "普通"
+	// Short variable declaration
+	health := "Normal"
 	if t.Watered && t.Healthy {
-		health = "青々と茂っている"
+		health = "Lush and Green"
 	} else if t.Watered {
-		health = "水分十分"
+		health = "Well Watered"
 	} else if t.Healthy {
-		health = "丈夫"
+		health = "Strong"
 	} else {
-		health = "枯れ気味"
+		health = "Withering"
 	}
 	return health
 }
 
-// 木専用のメソッド
+// SetHeight sets the tree's height.
 func (t *Tree) SetHeight(height float64) {
 	t.Height = height
 }
 
-// 名前を変えるメソッド
+// ChangeName changes the tree's name. Supports method chaining.
 func (t *Tree) ChangeName(newName string) Plant {
 	t.Name = newName
 	return t

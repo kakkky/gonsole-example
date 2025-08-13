@@ -2,9 +2,9 @@ package utils
 
 import "fmt"
 
-// 動物関連のユーティリティ関数
+// Animal-related utility functions
 
-// 動物の年齢を人間の年齢に換算
+// ConvertToHumanAge converts animal age to human equivalent age
 func ConvertToHumanAge(animalAge int, animalType string) int {
 	switch animalType {
 	case "dog":
@@ -16,7 +16,7 @@ func ConvertToHumanAge(animalAge int, animalType string) int {
 	}
 }
 
-// 動物の名前をフォーマット
+// FormatAnimalName formats animal name with emoji
 func FormatAnimalName(name string) string {
 	return fmt.Sprintf("🐾 %s", name)
 }

@@ -2,23 +2,23 @@ package utils
 
 import "fmt"
 
-// 植物関連のユーティリティ関数
+// Plant-related utility functions
 
-// 植物の成長段階を判定
+// GetGrowthStage determines the plant's growth stage based on age
 func GetGrowthStage(age int) string {
 	switch {
 	case age < 1:
-		return "苗"
+		return "Seedling"
 	case age < 3:
-		return "若木"
+		return "Young Plant"
 	case age < 10:
-		return "成木"
+		return "Mature Plant"
 	default:
-		return "古木"
+		return "Old Plant"
 	}
 }
 
-// 植物の名前をフォーマット
+// FormatPlantName formats plant name with emoji
 func FormatPlantName(name string) string {
 	return fmt.Sprintf("🌱 %s", name)
 }

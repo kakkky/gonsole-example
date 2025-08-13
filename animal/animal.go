@@ -2,23 +2,23 @@ package animal
 
 import "fmt"
 
-// 動物インターフェース
+// Animal interface defines common behavior for all animals
 type Animal interface {
-	// 動物の鳴き声を返す
+	// Sound returns the animal's vocalization
 	Sound() string
-	// 動物の説明を返す
+	// Describe returns a description of the animal
 	Describe() string
-	// メソッドチェーン用
+	// Feed feeds the animal (method chaining support)
 	Feed() Animal
-	// メソッドチェーン用
+	// Exercise makes the animal exercise (method chaining support)
 	Exercise() Animal
-	// 動物の状態を返す
+	// GetStatus returns the current status of the animal
 	GetStatus() string
-	// 動物の名前を変更する
+	// ChangeName changes the animal's name
 	ChangeName(newName string) Animal
 }
 
-// 基本動物構造体
+// BaseAnimal is the base structure for all animals
 type BaseAnimal struct {
 	Name  string
 	Age   int
@@ -26,25 +26,28 @@ type BaseAnimal struct {
 	Tired bool
 }
 
-// 犬構造体
+// Dog represents a dog with breed information
 type Dog struct {
 	BaseAnimal
-	Breed string // 犬種
+	Breed string // Dog breed
 }
 
-// 猫構造体
+// Cat represents a cat with color information
 type Cat struct {
 	BaseAnimal
-	Color string // 毛色
+	Color string // Fur color
 }
 
-// 定数
+// Constants for default values
 const (
-	DefaultBreed = "雑種"
-	DefaultColor = "茶色"
+	DefaultBreed = "Mixed"
+	DefaultColor = "Brown"
 )
 
-// 犬のコンストラクタ
+// NewDog creates a new dog instance.
+// name: the dog's name
+// age: the dog's age
+// Returns: pointer to initialized dog
 func NewDog(name string, age int) *Dog {
 	return &Dog{
 		BaseAnimal: BaseAnimal{
@@ -57,7 +60,10 @@ func NewDog(name string, age int) *Dog {
 	}
 }
 
-// 猫のコンストラクタ
+// NewCat creates a new cat instance.
+// name: the cat's name
+// age: the cat's age
+// Returns: pointer to initialized cat
 func NewCat(name string, age int) *Cat {
 	return &Cat{
 		BaseAnimal: BaseAnimal{
@@ -70,49 +76,59 @@ func NewCat(name string, age int) *Cat {
 	}
 }
 
-// 犬のインターフェース実装
+// Sound returns the dog's bark sound.
 func (d *Dog) Sound() string {
-	return "ワンワン"
+	return "Woof Woof"
 }
 
+// Describe returns detailed information about the dog as a string.
 func (d *Dog) Describe() string {
-	return fmt.Sprintf("犬の%s（%d歳、%s）", d.Name, d.Age, d.Breed)
+	return fmt.Sprintf("Dog named %s (%d years old, %s breed)", d.Name, d.Age, d.Breed)
 }
 
+// Feed feeds the dog and makes it full. Supports method chaining.
 func (d *Dog) Feed() Animal {
 	d.Fed = true
-	return d // メソッドチェーン用
+	return d // For method chaining
 }
 
+// Exercise makes the dog exercise and become tired. Supports method chaining.
 func (d *Dog) Exercise() Animal {
 	d.Tired = true
-	return d // メソッドチェーン用
+	return d // For method chaining
 }
 
+// GetStatus returns the dog's current status as a string.
+// Status is determined based on feeding and exercise state.
 func (d *Dog) GetStatus() string {
-	// 短縮変数宣言
-	status := "元気"
+	// Short variable declaration
+	status := "Energetic"
 	if d.Fed && d.Tired {
-		status = "満足"
+		status = "Satisfied"
 	} else if d.Fed {
-		status = "満腹"
+		status = "Full"
 	} else if d.Tired {
-		status = "疲れ気味"
+		status = "Tired"
 	}
 	return status
 }
 
-// 犬専用のメソッド
+// SetBreed sets the dog's breed.
 func (d *Dog) SetBreed(breed string) {
 	d.Breed = breed
 }
 
-// 名前を変えるメソッド
+// ChangeName changes the dog's name. Supports method chaining.
 func (d *Dog) ChangeName(newName string) Animal {
 	d.Name = newName
 	return d
 }
 
+// NewAnimal creates a new animal instance based on the animal type.
+// name: the animal's name
+// age: the animal's age
+// animalType: type of animal ("dog" or "cat")
+// Returns: created animal interface, nil for unknown types
 func NewAnimal(name string, age int, animalType string) Animal {
 	switch animalType {
 	case "dog":
@@ -120,48 +136,53 @@ func NewAnimal(name string, age int, animalType string) Animal {
 	case "cat":
 		return NewCat(name, age)
 	default:
-		return nil // 未知の動物タイプ
+		return nil // Unknown animal type
 	}
 }
 
-// 猫のインターフェース実装
+// Sound returns the cat's meow sound.
 func (c *Cat) Sound() string {
-	return "ニャーニャー"
+	return "Meow Meow"
 }
 
+// Describe returns detailed information about the cat as a string.
 func (c *Cat) Describe() string {
-	return fmt.Sprintf("猫の%s（%d歳、%s）", c.Name, c.Age, c.Color)
+	return fmt.Sprintf("Cat named %s (%d years old, %s color)", c.Name, c.Age, c.Color)
 }
 
+// Feed feeds the cat and makes it full. Supports method chaining.
 func (c *Cat) Feed() Animal {
 	c.Fed = true
-	return c // メソッドチェーン用
+	return c // For method chaining
 }
 
+// Exercise makes the cat exercise and become tired. Supports method chaining.
 func (c *Cat) Exercise() Animal {
 	c.Tired = true
-	return c // メソッドチェーン用
+	return c // For method chaining
 }
 
+// GetStatus returns the cat's current status as a string.
+// Status is determined based on feeding and exercise state.
 func (c *Cat) GetStatus() string {
-	// 短縮変数宣言
-	status := "のんびり"
+	// Short variable declaration
+	status := "Relaxed"
 	if c.Fed && c.Tired {
-		status = "ぐっすり"
+		status = "Sleepy"
 	} else if c.Fed {
-		status = "満足"
+		status = "Satisfied"
 	} else if c.Tired {
-		status = "だらけ気味"
+		status = "Lazy"
 	}
 	return status
 }
 
-// 猫専用のメソッド
+// SetColor sets the cat's fur color.
 func (c *Cat) SetColor(color string) {
 	c.Color = color
 }
 
-// 名前を変えるメソッド
+// ChangeName changes the cat's name. Supports method chaining.
 func (c *Cat) ChangeName(newName string) Animal {
 	c.Name = newName
 	return c
